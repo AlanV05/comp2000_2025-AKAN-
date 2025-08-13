@@ -16,9 +16,20 @@ public class Main extends JFrame {
       }
 
       @Override
-      public void paint(Graphics g) {
+      public void paint(Graphics g) { // paint object to "paint" the grid and cells
+
+  int gridStart = 10;
+  int recSize = 700;
+
 	g.setColor(java.awt.Color.BLACK);
-	g.drawRect(10, 10, 700, 700);
+	g.drawRect(gridStart, gridStart, recSize, recSize);
+
+  for(int i = 10; i<=recSize; i+=25){ // creating the cells 35x35
+      // vertical lines:
+    g.drawLine(i,gridStart,i,gridStart+recSize);
+    // horizontal lines
+    g.drawLine(gridStart, i, gridStart+recSize, i);
+  } 
       }
     }
 
