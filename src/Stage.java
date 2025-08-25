@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Stage {
   Grid grid;
-  List<Actor> actors = new ArrayList<>();
+  ArrayList<Actor> actors = new ArrayList<>();
 
   public Stage() {
     grid = new Grid();
