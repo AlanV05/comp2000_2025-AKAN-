@@ -1,5 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,15 +12,27 @@ public class Main extends JFrame {
       window.run();
     }
 
-    class Canvas extends JPanel {
+    class Canvas extends JPanel implements MouseMotionListener {
       Stage stage = new Stage();
+      
       public Canvas() {
-        setPreferredSize(new Dimension(720, 720));
+        setPreferredSize(new Dimension(1024, 720));  // Changed to 1024x720
+        addMouseMotionListener(this);  // Add mouse tracking
       }
 
       @Override
       public void paint(Graphics g) {
         stage.paint(g, getMousePosition());
+      }
+      
+      @Override
+      public void mouseMoved(MouseEvent e) {
+        repaint();  // Trigger repaint when mouse moves
+      }
+      
+      @Override
+      public void mouseDragged(MouseEvent e) {
+        repaint();  // Trigger repaint when mouse is dragged
       }
     }
 
@@ -32,6 +46,11 @@ public class Main extends JFrame {
 
     public void run() {
       while(true) {
+        try {
+          Thread.sleep(16);  // Add small delay for better performance (~60 FPS)
+        } catch (InterruptedException e) {
+          break;
+        }
         repaint();
       }
     }
