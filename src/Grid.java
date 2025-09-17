@@ -51,5 +51,6 @@ public class Grid {
     }
     
     // Return the cell wrapped in Optional
-    return Optional.of(cells[col][row]);  }
+    return Optional.of(cells[col][row]);  
+  }
 }
