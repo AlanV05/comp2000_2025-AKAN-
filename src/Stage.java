@@ -22,6 +22,8 @@ public class Stage {
     // now loop through all actors and paint them
     for (Actor actor : actors) {
       actor.paint(g);
+
+      
     }
   }
 }
