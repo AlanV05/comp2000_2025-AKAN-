@@ -7,7 +7,7 @@ public class Dog extends Actor {
         updateShapePositions();
     }
     
-    @Override
+    @Override  // <- ADD THIS LINE
     protected void updateShapePositions() {
         shapes.clear();
         

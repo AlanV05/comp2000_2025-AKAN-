@@ -35,7 +35,7 @@ public abstract class Actor implements Movable {
         return movementSpeed;
     }
     
-    protected abstract void updateShapePositions();
+    protected abstract void updateShapePositions();  // <- MAKE SURE THIS LINE EXISTS
     
     @SuppressWarnings("unchecked")
     protected void checkForItems() {

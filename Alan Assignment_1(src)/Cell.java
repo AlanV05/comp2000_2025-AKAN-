@@ -4,7 +4,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
-
 public abstract class Cell extends Rectangle implements TerrainEffect {
     static int size = 35;
     protected ArrayList<Item<?>> items = new ArrayList<>();
@@ -44,7 +43,7 @@ public abstract class Cell extends Rectangle implements TerrainEffect {
         items.remove(item);
     }
     
-    public ArrayList<Item<?>> getItems() {
+    public ArrayList<Item<?>> getItems() {  // <- MAKE SURE THIS METHOD EXISTS
         return new ArrayList<>(items);
     }
 
@@ -55,4 +54,9 @@ public abstract class Cell extends Rectangle implements TerrainEffect {
             return false;
         }
     }
+    
+    // These methods are abstract here, implemented in subclasses
+    public abstract int getMovementModifier();
+    public abstract boolean allowsMovement();
+    public abstract String getTerrainDescription();
 }
