@@ -23,11 +23,4 @@ public class Dog extends Actor {
         ear2.addPoint(loc.x + 30, loc.y + 15);
         shapes.add(ear2);
 
-        Polygon face = new Polygon();
-        face.addPoint(loc.x + 8, loc.y + 7);
-        face.addPoint(loc.x + 27, loc.y + 7);
-        face.addPoint(loc.x + 27, loc.y + 25);
-        face.addPoint(loc.x + 8, loc.y + 25);
-        shapes.add(face);
-    }
-}
+      

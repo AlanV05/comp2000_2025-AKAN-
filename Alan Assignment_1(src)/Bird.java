@@ -23,11 +23,3 @@ public class Bird extends Actor {
         wing2.addPoint(loc.x + 30, loc.y + 17);
         shapes.add(wing2);
         
-        Polygon body = new Polygon();
-        body.addPoint(loc.x + 15, loc.y + 10);
-        body.addPoint(loc.x + 20, loc.y + 10);
-        body.addPoint(loc.x + 20, loc.y + 25);
-        body.addPoint(loc.x + 15, loc.y + 25);
-        shapes.add(body);
-    }
-}

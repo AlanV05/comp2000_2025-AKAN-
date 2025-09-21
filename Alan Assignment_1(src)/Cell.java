@@ -36,22 +36,3 @@ public abstract class Cell extends Rectangle implements TerrainEffect {
     
     public void addItem(Item<?> item) {
         items.add(item);
-        item.setLocation(this);
-    }
-    
-    public void removeItem(Item<?> item) {
-        items.remove(item);
-    }
-    
-    public ArrayList<Item<?>> getItems() {
-        return new ArrayList<>(items);
-    }
-
-    public boolean contains(Point p) {
-        if(p != null) {
-            return super.contains(p);
-        } else {
-            return false;
-        }
-    }
-}
