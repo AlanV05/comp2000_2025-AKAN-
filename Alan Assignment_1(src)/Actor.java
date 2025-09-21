@@ -6,8 +6,13 @@ public abstract class Actor implements Movable {
     ArrayList<Polygon> shapes = new ArrayList<>();
     Cell loc;
     protected int movementSpeed = 1;
-    protected ArrayList<Item<?>> inventory = new ArrayList<>();
-    private Stage stage; // Reference to notify about collections
+    protected InventoryManager<Actor> inventoryManager; // NEW: Using generic InventoryManager
+    private Stage stage;
+
+    public Actor() {
+        // Initialize with capacity of 10 items
+        this.inventoryManager = new InventoryManager<>(this, 10);
+    }
 
     public void paint(Graphics g) {
         for (Polygon P : shapes){
@@ -38,7 +43,6 @@ public abstract class Actor implements Movable {
     
     protected abstract void updateShapePositions();
     
-    // NEW METHOD: Set stage reference
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -52,12 +56,15 @@ public abstract class Actor implements Movable {
                 CollectibleItem<Actor> collectible = (CollectibleItem<Actor>) item;
                 if(collectible.canBeCollectedBy(this)) {
                     collectible.onCollected(this);
-                    inventory.add(item);
-                    itemsToRemove.add(item);
                     
-                    // NEW: Notify stage about collection
-                    if (stage != null) {
-                        stage.onItemCollected(item);
+                    // NEW: Use generic InventoryManager
+                    if (inventoryManager.addItem((Item<Actor>) item)) {
+                        itemsToRemove.add(item);
+                        if (stage != null) {
+                            stage.onItemCollected(item);
+                        }
+                    } else {
+                        System.out.println("Inventory full! Can't collect " + item.getClass().getSimpleName());
                     }
                 }
             } catch(ClassCastException e) {
@@ -70,7 +77,20 @@ public abstract class Actor implements Movable {
         }
     }
     
-    public ArrayList<Item<?>> getInventory() {
-        return new ArrayList<>(inventory);
+    // NEW: Methods using the generic InventoryManager
+    public ArrayList<Item<Actor>> getInventory() {
+        return inventoryManager.getAllItems();
+    }
+    
+    public <I extends Item<Actor>> int getCountOf(Class<I> itemType) {
+        return inventoryManager.getCountOf(itemType);
+    }
+    
+    public boolean hasSpaceInInventory() {
+        return !inventoryManager.isFull();
+    }
+    
+    public InventoryManager<Actor> getInventoryManager() {
+        return inventoryManager;
     }
 }
