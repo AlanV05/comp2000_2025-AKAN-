@@ -20,4 +20,13 @@ public class Cat extends Actor {
         Polygon ear2 = new Polygon();
         ear2.addPoint(loc.x + 22, loc.y + 5);
         ear2.addPoint(loc.x + 26, loc.y + 15);
-        ear2.addPoint(loc.x + 18, loc.y 
+        ear2.addPoint(loc.x + 18, loc.y + 15);
+        shapes.add(ear2);
+
+        Polygon face = new Polygon();
+        face.addPoint(loc.x + 5, loc.y + 15);
+        face.addPoint(loc.x + 29, loc.y + 15);
+        face.addPoint(loc.x + 17, loc.y + 30);
+        shapes.add(face);
+    }
+}
