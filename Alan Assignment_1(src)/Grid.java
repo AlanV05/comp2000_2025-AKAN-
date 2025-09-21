@@ -35,7 +35,7 @@ public class Grid {
                             cells[i][j].addItem(new Mouse());
                             break;
                         case 2:
-                            cells[i][j].addItem(new Worm());
+                            cells[i][j].addItem(new Insect());
                             break;
                     }
                 }
