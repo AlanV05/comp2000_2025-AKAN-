@@ -7,6 +7,7 @@ public abstract class Actor implements Movable {
     Cell loc;
     protected int movementSpeed = 1;
     protected ArrayList<Item<?>> inventory = new ArrayList<>();
+    private Stage stage; // Reference to notify about collections
 
     public void paint(Graphics g) {
         for (Polygon P : shapes){
@@ -37,6 +38,11 @@ public abstract class Actor implements Movable {
     
     protected abstract void updateShapePositions();
     
+    // NEW METHOD: Set stage reference
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+    
     @SuppressWarnings("unchecked")
     protected void checkForItems() {
         ArrayList<Item<?>> itemsToRemove = new ArrayList<>();
@@ -48,6 +54,11 @@ public abstract class Actor implements Movable {
                     collectible.onCollected(this);
                     inventory.add(item);
                     itemsToRemove.add(item);
+                    
+                    // NEW: Notify stage about collection
+                    if (stage != null) {
+                        stage.onItemCollected(item);
+                    }
                 }
             } catch(ClassCastException e) {
                 // Item not meant for this actor type

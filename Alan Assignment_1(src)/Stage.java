@@ -6,18 +6,30 @@ import java.util.Optional;
 public class Stage {
     Grid grid;
     ArrayList<Actor> actors = new ArrayList<>();
-    Actor selectedActor = null;  // ADD THIS LINE
+    Actor selectedActor = null;
 
     public Stage() {
         grid = new Grid();
 
         // create actors and add them to the list
-        actors.add(new Cat(grid.cellAtColRow(0, 0).get()));
-        actors.add(new Dog(grid.cellAtColRow(0, 15).get()));
-        actors.add(new Bird(grid.cellAtColRow(12, 9).get()));  
+        Cat cat = new Cat(grid.cellAtColRow(0, 0).get());
+        Dog dog = new Dog(grid.cellAtColRow(0, 15).get());
+        Bird bird = new Bird(grid.cellAtColRow(12, 9).get());
+        
+        // Set stage reference for each actor
+        cat.setStage(this);
+        dog.setStage(this);
+        bird.setStage(this);
+        
+        actors.add(cat);
+        actors.add(dog);
+        actors.add(bird);
     }
 
     public void paint(Graphics g, Point mouseLoc) {
+        // Update item respawning
+        grid.updateRespawning();
+        
         // paint the grid first
         grid.paint(g, mouseLoc);
 
@@ -34,7 +46,11 @@ public class Stage {
         }
     }
     
-    // ADD THIS METHOD:
+    // NEW METHOD: Called when an actor collects an item
+    public void onItemCollected(Item<?> item) {
+        grid.onItemCollected(item);
+    }
+    
     public void handleMouseClick(int mouseX, int mouseY) {
         Optional<Cell> clickedCell = grid.cellAtPoint(new Point(mouseX, mouseY));
         
@@ -61,7 +77,6 @@ public class Stage {
         }
     }
     
-    // ADD THIS HELPER METHOD:
     private Actor getActorAt(Cell cell) {
         for (Actor actor : actors) {
             if (actor.loc == cell) {

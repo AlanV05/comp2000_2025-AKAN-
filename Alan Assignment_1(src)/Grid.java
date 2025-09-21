@@ -4,13 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.Optional;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class Grid {
     Cell[][] cells = new Cell[20][20];
+    private ArrayList<Item<?>> collectedItems = new ArrayList<>();  // Track collected items
+    private Random random = new Random();
     
     public Grid() {
-        Random random = new Random();
-        
         for(int i=0; i<cells.length; i++) {
             for(int j=0; j<cells[i].length; j++) {
                 // Create different terrain types randomly
@@ -92,6 +93,61 @@ public class Grid {
         } else {
             g.drawString("No cell at mouse position", 730, 30);
         }
+    }
+
+    // NEW METHOD: Called when an item is collected
+    public void onItemCollected(Item<?> item) {
+        collectedItems.add(item);
+        
+        // 30% chance to respawn immediately, otherwise wait for next respawn cycle
+        if (random.nextInt(100) < 30) {
+            respawnItem(item);
+        }
+    }
+    
+    // NEW METHOD: Respawn a collected item at a random location
+    private void respawnItem(Item<?> item) {
+        // Find a random non-rock cell
+        Cell randomCell = getRandomNonRockCell();
+        if (randomCell != null) {
+            item.respawn(randomCell);
+            collectedItems.remove(item);
+            System.out.println("A new " + item.getClass().getSimpleName() + " appeared!");
+        }
+    }
+    
+    // NEW METHOD: Periodically respawn items (called from Stage)
+    public void updateRespawning() {
+        // Respawn collected items with a small chance each frame
+        ArrayList<Item<?>> itemsToRespawn = new ArrayList<>();
+        
+        for (Item<?> item : collectedItems) {
+            if (random.nextInt(300) == 0) { // About 1 in 300 chance per frame
+                itemsToRespawn.add(item);
+            }
+        }
+        
+        for (Item<?> item : itemsToRespawn) {
+            respawnItem(item);
+        }
+    }
+    
+    // NEW METHOD: Find a random cell that's not rock and doesn't have items
+    private Cell getRandomNonRockCell() {
+        ArrayList<Cell> availableCells = new ArrayList<>();
+        
+        for(int i = 0; i < cells.length; i++) {
+            for(int j = 0; j < cells[i].length; j++) {
+                if(!(cells[i][j] instanceof RockCell) && cells[i][j].getItems().isEmpty()) {
+                    availableCells.add(cells[i][j]);
+                }
+            }
+        }
+        
+        if (!availableCells.isEmpty()) {
+            return availableCells.get(random.nextInt(availableCells.size()));
+        }
+        return null;
     }
 
     public Optional<Cell> cellAtColRow(int c, int r) {

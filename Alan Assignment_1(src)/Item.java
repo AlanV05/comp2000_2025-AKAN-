@@ -22,6 +22,14 @@ public abstract class Item<T extends Actor> implements CollectibleItem<T> {
         collected = true;
         if(location != null) {
             location.removeItem(this);
+            location = null;  // Clear the location reference
         }
+    }
+    
+    // NEW METHOD: Reset the item for respawning
+    public void respawn(Cell newLocation) {
+        collected = false;
+        this.location = newLocation;
+        newLocation.addItem(this);
     }
 }
