@@ -12,11 +12,6 @@ Open terminal/command prompt in the folder with all your `.java` files and run:
 - java Main
 
 
-**If using an IDE (Eclipse/IntelliJ):**
-1. Import all `.java` files  
-2. Run `Main.java`
-
-
 
 ## How to Play
 - Click on an animal (**Dog, Cat, or Bird**) to select it  
@@ -30,7 +25,6 @@ Open terminal/command prompt in the folder with all your `.java` files and run:
 -  **Green = Grass** → normal speed  
 -  **Blue = Water** → slower  
 -  **Gray = Rock** → impassable  
-
 
 
 ## Good Design Examples
