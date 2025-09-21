@@ -7,7 +7,7 @@ public class Cat extends Actor {
         updateShapePositions();
     }
     
-    @Override  // <- ADD THIS LINE
+    @Override
     protected void updateShapePositions() {
         shapes.clear();
         

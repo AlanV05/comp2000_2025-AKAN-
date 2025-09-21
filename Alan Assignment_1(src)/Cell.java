@@ -43,7 +43,7 @@ public abstract class Cell extends Rectangle implements TerrainEffect {
         items.remove(item);
     }
     
-    public ArrayList<Item<?>> getItems() {  // <- MAKE SURE THIS METHOD EXISTS
+    public ArrayList<Item<?>> getItems() {
         return new ArrayList<>(items);
     }
 
@@ -54,9 +54,4 @@ public abstract class Cell extends Rectangle implements TerrainEffect {
             return false;
         }
     }
-    
-    // These methods are abstract here, implemented in subclasses
-    public abstract int getMovementModifier();
-    public abstract boolean allowsMovement();
-    public abstract String getTerrainDescription();
 }
